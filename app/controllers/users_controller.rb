@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
+  def create
+    @user = User.find(params[:user_id])
+    @perfume = @user.comments.create(params[:perfume].permit(:name))
+    redirect_to post_path(@post)
+  end
+
   before_action :set_user, only: %i[ show edit update destroy ]
 
   # GET /users or /users.json
@@ -65,6 +71,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :login)
+      params.require(:user).permit(:name, :login, :title, :location)
     end
 end
